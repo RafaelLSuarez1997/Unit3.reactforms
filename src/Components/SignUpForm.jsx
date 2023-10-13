@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-export default function SignUpForm() {
+export default function SignUpForm({setToken}) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
@@ -17,14 +17,15 @@ export default function SignUpForm() {
                     "Accept": "application/json",
                     "Content-Type": "application/json"
                 }
-                ,body:JSON.stringify()
+                ,body:JSON.stringify({
+                    username: username,
+                    password: password
+                })
             }
             const response = await fetch("https://fsa-jwt-practice.herokuapp.com/signup", addSignUp)
             const result = response.json();
             console.log(result)
-            return result;
-            
-        
+            setToken(result.token)
         }
         catch(err) {
             setError(error.message);
