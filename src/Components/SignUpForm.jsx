@@ -5,11 +5,14 @@ export default function SignUpForm({setToken}) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
-
+    const isUsernameValid = username.length === 8;
 
     async function handleSubmit(event){
         event.preventDefault();
-        console.log("hello")
+        if (!isUsernameValid) {
+            setError("Username must be eight characters in length.");
+                return;}
+        
         try{
             const addSignUp = {
                 method: "POST",
@@ -40,6 +43,7 @@ export default function SignUpForm({setToken}) {
             <label>
                 Username: {''}<input value={username} onChange={(e)=>setUsername(e.target.value)} />
             </label>
+            {!isUsernameValid && <p>Username must be eight characters in length.</p>}
             <label>
                 Password: {''}<input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} />
             </label>
